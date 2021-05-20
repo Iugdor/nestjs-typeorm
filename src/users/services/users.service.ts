@@ -6,12 +6,14 @@ import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 import { ProductsService } from './../../products/services/products.service';
+import { Client } from 'pg';
 
 @Injectable()
 export class UsersService {
   constructor(
     private productsService: ProductsService,
     private configService: ConfigService,
+    @Inject('PG') private clientPg: Client,
   ) {}
 
   private counterId = 1;
@@ -75,5 +77,9 @@ export class UsersService {
       user,
       products: this.productsService.findAll(),
     };
+  }
+
+  async getTasks() {
+    return (await this.clientPg.query('SELECT * FROM tasks')).rows;
   }
 }
