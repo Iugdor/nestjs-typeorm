@@ -9,7 +9,7 @@ docker-compose up -d postgres
 
 ## Start the pgadmin service
 ``
-docker-compose up -d postgres
+docker-compose up -d pgadmin
 ``
 
 ## Check that the docker is up

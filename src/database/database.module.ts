@@ -32,6 +32,8 @@ client.connect();
           database: dbName,
           password,
           port,
+          synchronize: true,
+          autoLoadEntities: true,
         };
       },
       inject: [config.KEY],
