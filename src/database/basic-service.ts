@@ -29,7 +29,7 @@ export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
   }
 
   async update(id: number, changes: U) {
-    const model = await this.modelRepository.findOne(id);
+    const model = await this.findOne(id);
     this.modelRepository.merge(model, changes);
     return this.modelRepository.save(model);
   }

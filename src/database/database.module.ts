@@ -32,7 +32,7 @@ client.connect();
           database: dbName,
           password,
           port,
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true,
         };
       },

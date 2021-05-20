@@ -107,3 +107,6 @@ dist
 
 #Postgres data from postgres in docker
 /postgres_data
+
+#Postgres data from postgres in docker
+/**/database/migrations
