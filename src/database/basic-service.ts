@@ -1,8 +1,7 @@
-import { NotFoundException } from '@nestjs/common';
-import { DeepPartial, Repository } from 'typeorm';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { ModelDto, RelationsResolver } from 'src/common/types';
+import { QueryFailedError, Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
-
-type ModelDto<T> = DeepPartial<T>;
 
 export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
   private readonly modelName: string;
@@ -24,16 +23,18 @@ export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
     return model;
   }
 
-  async create(data: C, resolveRelations?: (newModel: T, data) => void) {
+  async create(data: C, resolver?: RelationsResolver<T>) {
     // Create an instance of the model using data which is the create dto
     const newModel = this.modelRepository.create(data);
-    if (resolveRelations) await resolveRelations(newModel, data);
+    if (resolver) await resolver(newModel, data);
 
     return this.modelRepository.save(newModel);
   }
 
-  async update(id: number, changes: U) {
+  async update(id: number, changes: U, resolver?: RelationsResolver<T>) {
     const model = await this.findOne(id);
+    if (resolver) await resolver(model, changes);
+
     this.modelRepository.merge(model, changes);
     return this.modelRepository.save(model);
   }

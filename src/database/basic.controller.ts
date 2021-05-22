@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Delete,
   Get,
@@ -8,10 +9,13 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseFilters,
 } from '@nestjs/common';
+import { TypeOrmExceptionFilter } from '../common/exceptions/TypeOrmExceptionFilter';
+import { ModelDto } from 'src/common/types';
 import { BasicService } from './basic-service';
 
-export class BasicController<T, C, U> {
+export class BasicController<T, C extends ModelDto<T>, U extends ModelDto<T>> {
   constructor(private modelService: BasicService<T, C, U>) {}
 
   @Get()
@@ -26,8 +30,14 @@ export class BasicController<T, C, U> {
   }
 
   @Post()
+  @UseFilters(TypeOrmExceptionFilter)
   create(@Body() payload: C) {
-    return this.modelService.create(payload);
+    try {
+      return this.modelService.create(payload);
+    } catch (err) {
+      console.log('enter');
+      throw new BadRequestException(err.detail);
+    }
   }
 
   @Put(':id')

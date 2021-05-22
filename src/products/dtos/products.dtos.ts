@@ -33,6 +33,11 @@ export class CreateProductDto {
   @IsNotEmpty()
   @ApiProperty({ description: "Product's url image" })
   readonly image: string;
+
+  @IsPositive()
+  @IsNotEmpty()
+  @ApiProperty({ description: "Product's brand" })
+  readonly brandId: number;
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
