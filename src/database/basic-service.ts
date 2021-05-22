@@ -1,6 +1,10 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { ModelDto, RelationsResolver } from 'src/common/types';
-import { QueryFailedError, Repository } from 'typeorm';
+import { NotFoundException } from '@nestjs/common';
+import {
+  ModelDto,
+  RelationsOptions,
+  RelationsResolver,
+} from 'src/common/types';
+import { Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
 
 export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
@@ -14,9 +18,23 @@ export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
     return this.modelRepository.find();
   }
 
-  async findOne(id: number) {
-    const relations = RELATIONS[this.modelName];
-    const model = await this.modelRepository.findOne(id, { relations });
+  async findByIds(ids: number[]) {
+    return await this.modelRepository.findByIds(ids);
+  }
+
+  async findOne(id: number, relationsOptions?: RelationsOptions<T>) {
+    const defaultRelation: RelationsOptions<T> = {
+      withRelations: true,
+      explicit: undefined,
+    };
+    const { withRelations, explicit } = relationsOptions || defaultRelation;
+    let model: T;
+    if (withRelations || withRelations === undefined) {
+      const relations = explicit ? explicit : RELATIONS[this.modelName];
+      model = await this.modelRepository.findOne(id, { relations });
+    } else {
+      model = await this.modelRepository.findOne(id);
+    }
     if (!model) {
       throw new NotFoundException(`${this.modelName} #${id} not found`);
     }
