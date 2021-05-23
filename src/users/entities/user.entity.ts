@@ -23,6 +23,6 @@ export class User extends BasicEntity {
   role: string;
 
   @OneToOne(() => Customer, { nullable: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 }

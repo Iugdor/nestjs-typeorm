@@ -16,7 +16,7 @@ export class Customer {
   @Column({ type: 'varchar', length: 100 })
   name: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ name: 'last_name', type: 'varchar', length: 100 })
   lastName: string;
 
   //Max Lenght 15 : https://en.wikipedia.org/wiki/Telephone_numbering_plan#:~:text=International%20numbering%20plan,-The%20E.&text=as%20the%20NANP.-,E.,)%2C%20and%20the%20subscriber%20number.

@@ -1,11 +1,5 @@
 import { BasicEntity } from 'src/database/base.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from './product.entity';
 
 @Entity()
@@ -17,6 +11,5 @@ export class Category extends BasicEntity {
   name: string;
 
   @ManyToMany(() => Product, (product) => product.categories)
-  @JoinTable()
   products: Product[];
 }

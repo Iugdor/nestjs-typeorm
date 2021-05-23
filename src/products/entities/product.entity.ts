@@ -3,6 +3,8 @@ import {
   Column,
   Entity,
   Index,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -32,8 +34,18 @@ export class Product extends BasicEntity {
   image: string;
 
   @ManyToOne(() => Brand, (brand) => brand.products, { nullable: false })
+  @JoinColumn({ name: 'brand_id' })
   brand: Brand;
 
   @ManyToMany(() => Category, (category) => category.products)
+  @JoinTable({
+    name: 'products_categories',
+    joinColumn: {
+      name: 'product_id',
+    },
+    inverseJoinColumn: {
+      name: 'category_id',
+    },
+  })
   categories: Category[];
 }

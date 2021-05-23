@@ -1,5 +1,11 @@
 import { BasicEntity } from 'src/database/base.entity';
-import { Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Customer } from './customer.entity';
 import { OrderItem } from './order-item.entity';
 
@@ -9,6 +15,7 @@ export class Order extends BasicEntity {
   id: number;
 
   @ManyToOne(() => Customer, (customer) => customer.orders)
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
   @OneToMany(() => OrderItem, (item) => item.order)
