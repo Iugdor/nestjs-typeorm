@@ -1,17 +1,15 @@
-import { NotFoundException } from '@nestjs/common';
-import {
-  ModelDto,
-  RelationsOptions,
-  RelationsResolver,
-} from 'src/common/types';
+import { Logger, NotFoundException } from '@nestjs/common';
+import { RelationsOptions, RelationsResolver } from 'src/common/types';
 import { Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
 
-export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
+export class BasicService<T, C, U> {
   private readonly modelName: string;
+  private readonly logger: Logger;
 
   constructor(protected readonly modelRepository: Repository<T>) {
     this.modelName = this.modelRepository.metadata.tableName;
+    this.logger = new Logger(this.constructor['name']);
   }
 
   findAll() {
@@ -43,10 +41,11 @@ export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
 
   async create(data: C, resolver?: RelationsResolver<T>) {
     // Create an instance of the model using data which is the create dto
-    const newModel = this.modelRepository.create(data);
+    let newModel = this.modelRepository.create(data);
     if (resolver) await resolver(newModel, data);
-
-    return this.modelRepository.save(newModel);
+    newModel = await this.modelRepository.save(newModel);
+    this.logger.log(`${this.modelName} #${newModel} created`);
+    return newModel;
   }
 
   async update(id: number, changes: U, resolver?: RelationsResolver<T>) {
@@ -54,15 +53,23 @@ export class BasicService<T, C extends ModelDto<T>, U extends ModelDto<T>> {
     if (resolver) await resolver(model, changes);
 
     this.modelRepository.merge(model, changes);
+    this.logger.log(`${this.modelName} #${id} updated`);
     return this.modelRepository.save(model);
   }
 
   async remove(id: number) {
-    const model = await this.modelRepository.findOne(id);
-    if (!model) {
-      throw new NotFoundException(`${this.modelName} #${id} not found`);
-    }
-    await this.modelRepository.delete(model);
+    const model = await this.findOne(id);
+    console.log(model);
+    await this.modelRepository
+      .createQueryBuilder()
+      .delete()
+      .whereInIds(id)
+      .execute();
+    this.logger.log(`${this.modelName} #${id} deleted`);
     return model;
+  }
+
+  save(model: T) {
+    this.modelRepository.save(model);
   }
 }

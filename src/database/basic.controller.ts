@@ -12,16 +12,10 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { TypeOrmExceptionFilter } from '../common/exceptions/TypeOrmExceptionFilter';
-import { ModelDto } from 'src/common/types';
 import { BasicService } from './basic-service';
 
-export class BasicController<T, C extends ModelDto<T>, U extends ModelDto<T>> {
+export class BasicController<T, C, U> {
   constructor(private modelService: BasicService<T, C, U>) {}
-
-  @Get()
-  getProducts() {
-    return this.modelService.findAll();
-  }
 
   @Get(':id')
   @HttpCode(HttpStatus.ACCEPTED)
@@ -30,7 +24,6 @@ export class BasicController<T, C extends ModelDto<T>, U extends ModelDto<T>> {
   }
 
   @Post()
-  @UseFilters(TypeOrmExceptionFilter)
   create(@Body() payload: C) {
     try {
       return this.modelService.create(payload);
