@@ -5,8 +5,11 @@ import {
   IsNotEmpty,
   IsPositive,
   IsArray,
+  IsOptional,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { FilterDto } from 'src/common/dtos/filter.dto';
+import { Between } from 'typeorm';
 
 export class CreateProductDto {
   @IsString()
@@ -47,3 +50,19 @@ export class CreateProductDto {
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
+export class FilterProductDto extends FilterDto {
+  @IsOptional()
+  @IsPositive()
+  minPrice: number;
+
+  @IsOptional()
+  @IsPositive()
+  maxPrice: number;
+}
+
+export const FilterACTIONS = {
+  price: ({ minPrice, maxPrice }) => {
+    Between(minPrice, maxPrice);
+  },
+};

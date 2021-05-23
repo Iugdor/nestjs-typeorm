@@ -1,9 +1,13 @@
 import { Logger, NotFoundException } from '@nestjs/common';
-import { RelationsOptions, RelationsResolver } from 'src/common/types';
-import { Repository } from 'typeorm';
+import { FilterDto } from 'src/common/dtos/filter.dto';
+import {
+  FilterResolver,
+  RelationsOptions,
+  RelationsResolver,
+} from 'src/common/types';
+import { FindConditions, FindManyOptions, Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
-
-export class BasicService<T, C, U> {
+export class BasicService<T, C, U, F extends FilterDto> {
   private readonly modelName: string;
   private readonly logger: Logger;
 
@@ -12,8 +16,15 @@ export class BasicService<T, C, U> {
     this.logger = new Logger(this.constructor['name']);
   }
 
-  findAll() {
-    return this.modelRepository.find();
+  findAll(params?: F, filterResolver?: FilterResolver<T, F>) {
+    let findOptions: FindManyOptions;
+    if (Object.keys(params).length > 0) {
+      const { limit, offset } = params;
+      const where: FindConditions<T> = {};
+      if (filterResolver) filterResolver(params, where);
+      findOptions = { take: limit, skip: offset * limit, where: where };
+    }
+    return this.modelRepository.find(findOptions);
   }
 
   async findByIds(ids: number[]) {

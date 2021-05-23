@@ -7,12 +7,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BasicService } from 'src/database/basic-service';
 import { CustomersService } from './customers.service';
+import { FilterDto } from 'src/common/dtos/filter.dto';
 
 @Injectable()
 export class UsersService extends BasicService<
   User,
   CreateUserDto,
-  UpdateUserDto
+  UpdateUserDto,
+  FilterDto
 > {
   constructor(
     @InjectRepository(User) repository: Repository<User>,

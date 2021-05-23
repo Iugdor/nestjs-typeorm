@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { Product } from './../entities/product.entity';
-import { CreateProductDto, UpdateProductDto } from './../dtos/products.dtos';
+import {
+  CreateProductDto,
+  FilterProductDto,
+  UpdateProductDto,
+} from './../dtos/products.dtos';
 import { BasicService } from 'src/database/basic-service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { BrandsService } from './brands.service';
 import { CategoriesService } from './categories.service';
 
@@ -12,7 +16,8 @@ import { CategoriesService } from './categories.service';
 export class ProductsService extends BasicService<
   Product,
   CreateProductDto,
-  UpdateProductDto
+  UpdateProductDto,
+  FilterProductDto
 > {
   constructor(
     @InjectRepository(Product) repository: Repository<Product>,
@@ -27,6 +32,10 @@ export class ProductsService extends BasicService<
 
   update(id: number, data: UpdateProductDto) {
     return super.update(id, data, this.resolveRelations);
+  }
+
+  findAll(params: FilterProductDto) {
+    return super.findAll(params, this.filterResolver);
   }
 
   async removeCategoryByProduct(productId: number, categoryId: number) {
@@ -74,6 +83,13 @@ export class ProductsService extends BasicService<
         throw new BadRequestException('Categories array invalid');
       }
       newModel.categories = categories;
+    }
+  };
+
+  filterResolver = (params, where) => {
+    const { minPrice, maxPrice } = params;
+    if (minPrice && maxPrice) {
+      where.price = Between(minPrice, maxPrice);
     }
   };
 }

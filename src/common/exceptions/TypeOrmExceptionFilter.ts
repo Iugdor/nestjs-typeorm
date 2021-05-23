@@ -9,7 +9,7 @@ export class TypeOrmExceptionFilter
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const message = exception['detail'];
-    console.log(exception.message);
+    console.log(exception.stack);
 
     response.status(404).json({
       statusCode: 404,

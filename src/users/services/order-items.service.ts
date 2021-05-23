@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FilterDto } from 'src/common/dtos/filter.dto';
 import { BasicService } from 'src/database/basic-service';
 import { ProductsService } from 'src/products/services/products.service';
 import { Repository } from 'typeorm';
@@ -11,7 +12,8 @@ import { OrdersService } from './orders.service';
 export class OrderItemsService extends BasicService<
   OrderItem,
   CreateOrderItemDto,
-  UpdateOrderItemDto
+  UpdateOrderItemDto,
+  FilterDto
 > {
   constructor(
     @InjectRepository(OrderItem) modelRepository: Repository<OrderItem>,

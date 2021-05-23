@@ -2,6 +2,7 @@ import { BasicEntity } from 'src/database/base.entity';
 import {
   Column,
   Entity,
+  Index,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -20,6 +21,7 @@ export class Product extends BasicEntity {
   @Column({ type: 'text' })
   description: string;
 
+  @Index()
   @Column({ type: 'float' })
   price: number;
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FilterDto } from 'src/common/dtos/filter.dto';
 import { BasicService } from 'src/database/basic-service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto, UpdateOrderDto } from '../dtos/order.dto';
@@ -10,7 +11,8 @@ import { CustomersService } from './customers.service';
 export class OrdersService extends BasicService<
   Order,
   CreateOrderDto,
-  UpdateOrderDto
+  UpdateOrderDto,
+  FilterDto
 > {
   constructor(
     @InjectRepository(Order) repository: Repository<Order>,
