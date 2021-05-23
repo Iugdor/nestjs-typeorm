@@ -70,7 +70,6 @@ export class BasicService<T, C, U, F extends FilterDto> {
 
   async remove(id: number) {
     const model = await this.findOne(id);
-    console.log(model);
     await this.modelRepository
       .createQueryBuilder()
       .delete()

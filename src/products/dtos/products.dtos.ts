@@ -22,13 +22,13 @@ export class CreateProductDto {
   @ApiProperty({ description: "Product's description " })
   readonly description: string;
 
-  @IsNumber()
+  @IsPositive()
   @IsNotEmpty()
   @IsPositive()
   @ApiProperty({ description: "Product's price" })
   readonly price: number;
 
-  @IsNumber()
+  @IsPositive()
   @IsNotEmpty()
   @ApiProperty({ description: "Product's stock" })
   readonly stock: number;
