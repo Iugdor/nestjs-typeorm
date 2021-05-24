@@ -2,7 +2,6 @@ import {
   IsString,
   IsNotEmpty,
   IsEmail,
-  Length,
   MaxLength,
   IsOptional,
   IsPositive,
@@ -18,7 +17,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(100)
+  @MaxLength(255)
   @ApiProperty({ description: "User's password " })
   readonly password: string;
 
