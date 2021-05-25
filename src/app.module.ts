@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { enviroments } from './enviroments';
 import { AuthModule } from './auth/auth.module';
 import config from './config';
+import { TransformInterceptor } from './config/transform.interceptor';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import config from './config';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
         POSTGRES_HOST: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     HttpModule,
@@ -37,6 +39,7 @@ import config from './config';
   controllers: [AppController],
   providers: [
     AppService,
+    TransformInterceptor,
     // {
     //   provide: 'TASKS',
     //   useFactory: async (http: HttpService) => {

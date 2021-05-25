@@ -3,9 +3,12 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { TypeOrmExceptionFilter } from './common/exceptions/TypeOrmExceptionFilter';
+import { TransformInterceptor } from './config/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalInterceptors(new TransformInterceptor());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
