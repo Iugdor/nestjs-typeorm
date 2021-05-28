@@ -5,9 +5,9 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BasicService } from 'src/database/basic-service';
+import { BasicService } from '../../database/basic-service';
 import { CustomersService } from './customers.service';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../../common/dtos/filter.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

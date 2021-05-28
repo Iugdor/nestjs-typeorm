@@ -1,5 +1,3 @@
-import { Exclude } from 'class-transformer';
-import { Product } from 'src/products/entities/product.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Product } from '../../products/entities/product.entity';
 import { Order } from './order.entity';
 
 @Entity({ name: 'order_item' })

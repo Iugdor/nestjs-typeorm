@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilterDto } from 'src/common/dtos/filter.dto';
-import { BasicService } from 'src/database/basic-service';
+import { FilterDto } from '../../common/dtos/filter.dto';
+import { BasicService } from '../../database/basic-service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto, UpdateOrderDto } from '../dtos/order.dto';
 import { Order } from '../entities/order.entity';

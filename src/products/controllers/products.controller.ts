@@ -19,11 +19,11 @@ import {
   UpdateProductDto,
 } from '../dtos/products.dtos';
 import { ProductsService } from './../services/products.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Public } from 'src/auth/decorators/public.decorator';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/models/roles.models';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { Public } from '../../auth/decorators/public.decorator';
+import { Roles } from '../../auth/decorators/roles.decorator';
+import { Role } from '../../auth/models/roles.models';
+import { RolesGuard } from '../../auth/guards/roles.guard';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('products')

@@ -9,7 +9,7 @@ import {
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../../common/dtos/filter.dto';
 
 import { CategoriesService } from '../services/categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './../dtos/category.dtos';

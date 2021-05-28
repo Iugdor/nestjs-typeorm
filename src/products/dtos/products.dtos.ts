@@ -8,7 +8,7 @@ import {
   IsOptional,
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../../common/dtos/filter.dto';
 import { Between } from 'typeorm';
 
 export class CreateProductDto {

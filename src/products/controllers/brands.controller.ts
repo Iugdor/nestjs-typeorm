@@ -13,7 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { BrandsService } from '../services/brands.service';
 import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../../common/dtos/filter.dto';
 
 @ApiTags('brands')
 @Controller('brands')

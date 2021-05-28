@@ -6,7 +6,7 @@ import {
   FilterProductDto,
   UpdateProductDto,
 } from './../dtos/products.dtos';
-import { BasicService } from 'src/database/basic-service';
+import { BasicService } from '../../database/basic-service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { BrandsService } from './brands.service';

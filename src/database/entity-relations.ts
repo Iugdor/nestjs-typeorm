@@ -1,9 +1,9 @@
-import { Brand } from 'src/products/entities/brand.entity';
-import { Category } from 'src/products/entities/category.entity';
-import { Product } from 'src/products/entities/product.entity';
-import { OrderItem } from 'src/users/entities/order-item.entity';
-import { Order } from 'src/users/entities/order.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Brand } from '../products/entities/brand.entity';
+import { Category } from '../products/entities/category.entity';
+import { Product } from '../products/entities/product.entity';
+import { OrderItem } from '../users/entities/order-item.entity';
+import { Order } from '../users/entities/order.entity';
+import { User } from '../users/entities/user.entity';
 
 type Relations = {
   [Property in keyof Entities]+?: (keyof Entities[Property])[];

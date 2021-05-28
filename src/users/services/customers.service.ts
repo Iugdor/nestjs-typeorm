@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 
 import { Customer } from '../entities/customer.entity';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
-import { BasicService } from 'src/database/basic-service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../../common/dtos/filter.dto';
+import { BasicService } from '../../database/basic-service';
 
 @Injectable()
 export class CustomersService extends BasicService<

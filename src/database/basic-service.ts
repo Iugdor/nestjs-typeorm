@@ -1,10 +1,10 @@
 import { Logger, NotFoundException } from '@nestjs/common';
-import { FilterDto } from 'src/common/dtos/filter.dto';
+import { FilterDto } from '../common/dtos/filter.dto';
 import {
   FilterResolver,
   RelationsOptions,
   RelationsResolver,
-} from 'src/common/types';
+} from '../common/types';
 import { FindConditions, FindManyOptions, Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
 export class BasicService<T, C, U, F extends FilterDto> {

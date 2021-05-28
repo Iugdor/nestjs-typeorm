@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilterDto } from 'src/common/dtos/filter.dto';
-import { BasicService } from 'src/database/basic-service';
-import { ProductsService } from 'src/products/services/products.service';
+import { FilterDto } from '../../common/dtos/filter.dto';
+import { BasicService } from '../../database/basic-service';
+import { ProductsService } from '../../products/services/products.service';
 import { Repository } from 'typeorm';
 import { CreateOrderItemDto, UpdateOrderItemDto } from '../dtos/order-item.dto';
 import { OrderItem } from '../entities/order-item.entity';
