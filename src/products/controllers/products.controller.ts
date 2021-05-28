@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import {
   CreateProductDto,
@@ -44,12 +44,15 @@ export class ProductsController {
   }
 
   @Roles(Role.ADMIN)
+  @ApiBearerAuth()
   @Post()
   create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
   }
 
   @Put(':id')
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateProductDto,
@@ -58,10 +61,14 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
   }
   @Put(':id/category/:categoryId')
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
   addCategory(
     @Param('id', ParseIntPipe) id: number,
     @Param('categoryId', ParseIntPipe) categoryId: number,
@@ -70,6 +77,8 @@ export class ProductsController {
   }
 
   @Delete(':id/category/:categoryId')
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
   deleteCategory(
     @Param('id', ParseIntPipe) id: number,
     @Param('categoryId', ParseIntPipe) categoryId: number,

@@ -9,7 +9,10 @@ module.exports = {
   cli: {
     migrationsDir: 'src/database/migrations',
   },
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl:
+    process.env.NODE_ENV === 'prod'
+      ? {
+          rejectUnauthorized: false,
+        }
+      : null,
 };

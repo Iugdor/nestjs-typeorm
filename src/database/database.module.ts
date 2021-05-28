@@ -30,9 +30,12 @@ client.connect();
           url: postgresUrl,
           synchronize: false,
           autoLoadEntities: true,
-          ssl: {
-            rejectUnauthorized: false,
-          },
+          ssl:
+            process.env.NODE_ENV === 'prod'
+              ? {
+                  rejectUnauthorized: false,
+                }
+              : null,
         };
       },
       inject: [config.KEY],

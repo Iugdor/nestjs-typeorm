@@ -6,7 +6,9 @@ import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Role } from '../../auth/models/roles.models';
 import { PayloadToken } from '../../auth/models/token.model';
 import { OrdersService } from '../services/orders.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('profile')
 @Controller('profile')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ProfileController {

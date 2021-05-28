@@ -12,7 +12,9 @@ import {
 import { FilterDto } from '../../common/dtos/filter.dto';
 import { CreateOrderDto, UpdateOrderDto } from '../dtos/order.dto';
 import { OrdersService } from '../services/orders.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
