@@ -1,4 +1,3 @@
-import { BasicEntity } from 'src/database/base.entity';
 import {
   Column,
   Entity,
@@ -8,12 +7,14 @@ import {
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 
 @Entity()
-export class Product extends BasicEntity {
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -48,4 +49,18 @@ export class Product extends BasicEntity {
     },
   })
   categories: Category[];
+
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
 }

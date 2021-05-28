@@ -1,9 +1,15 @@
-import { BasicEntity } from 'src/database/base.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Product } from './product.entity';
 
 @Entity()
-export class Brand extends BasicEntity {
+export class Brand {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,4 +21,17 @@ export class Brand extends BasicEntity {
 
   @OneToMany(() => Product, (product) => product.brand)
   products: Product[];
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
 }

@@ -1,17 +1,18 @@
 import { Exclude, Expose } from 'class-transformer';
-import { BasicEntity } from 'src/database/base.entity';
 import {
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Customer } from './customer.entity';
 import { OrderItem } from './order-item.entity';
 
 @Entity()
-export class Order extends BasicEntity {
+export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,6 +23,20 @@ export class Order extends BasicEntity {
   @Exclude()
   @OneToMany(() => OrderItem, (item) => item.order)
   items: OrderItem[];
+
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
 
   @Expose()
   get products() {

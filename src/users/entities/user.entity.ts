@@ -1,16 +1,17 @@
 import { Exclude } from 'class-transformer';
-import { BasicEntity } from 'src/database/base.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Customer } from './customer.entity';
 
 @Entity()
-export class User extends BasicEntity {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -27,4 +28,18 @@ export class User extends BasicEntity {
   @OneToOne(() => Customer, { nullable: true })
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
+
+  @CreateDateColumn({
+    name: 'create_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createAt: Date;
+
+  @UpdateDateColumn({
+    name: 'update_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updateAt: Date;
 }
