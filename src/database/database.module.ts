@@ -24,16 +24,15 @@ client.connect();
     //Connection using TypeOrmModule
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, host, dbName, password, port } = configService.postgres;
+        const { postgresUrl } = configService;
         return {
           type: 'postgres',
-          username: user,
-          host,
-          database: dbName,
-          password,
-          port,
+          url: postgresUrl,
           synchronize: false,
           autoLoadEntities: true,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         };
       },
       inject: [config.KEY],
@@ -48,13 +47,12 @@ client.connect();
       // Basic connection to Postgres
       provide: 'PG',
       useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, host, dbName, password, port } = configService.postgres;
+        const { postgresUrl } = configService;
         const client = new Client({
-          user: user,
-          host: host,
-          database: dbName,
-          password: password,
-          port: port,
+          connectionString: postgresUrl,
+          ssl: {
+            rejectUnauthorized: false,
+          },
         });
 
         client.connect();

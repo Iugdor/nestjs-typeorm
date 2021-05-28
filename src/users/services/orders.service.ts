@@ -32,6 +32,11 @@ export class OrdersService extends BasicService<
     await this.resolveRelations(order, changes);
     return this.modelRepository.save(order);
   }
+
+  findByCustomer(customerId: number) {
+    console.log(customerId);
+    return this.modelRepository.find({ where: { customer: customerId } });
+  }
   resolveRelations = async (
     newModel: Order,
     data: CreateOrderDto | UpdateOrderDto,

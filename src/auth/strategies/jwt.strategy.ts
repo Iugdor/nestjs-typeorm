@@ -9,8 +9,11 @@ import { PayloadToken } from '../models/token.model';
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(@Inject(config.KEY) configService: ConfigType<typeof config>) {
     super({
+      // This means that the token is in Authorization header
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      // To verify the token's expiration
       ignoreExpiration: false,
+      //Pass the jwtSecret from environment variables
       secretOrKey: configService.jwtSecret,
     });
   }

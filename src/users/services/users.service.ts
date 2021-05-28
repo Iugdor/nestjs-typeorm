@@ -34,8 +34,15 @@ export class UsersService extends BasicService<
     return this.modelRepository.save(newUser);
   }
 
+  async update(id: number, data: UpdateUserDto) {
+    return super.update(id, data, this.resolveRelations);
+  }
+
   findByEmail(email: string) {
-    return this.modelRepository.findOne({ where: { email } });
+    return this.modelRepository.findOne({
+      where: { email },
+      relations: ['customer'],
+    });
   }
 
   resolveRelations = async (newModel: User, data: CreateUserDto) => {

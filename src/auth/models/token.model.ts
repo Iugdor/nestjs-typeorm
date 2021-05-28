@@ -1,4 +1,9 @@
 export interface PayloadToken {
   role: string;
-  sub: number;
+  sub: SubToken;
+}
+
+export interface SubToken {
+  userId: number;
+  customerId: number;
 }

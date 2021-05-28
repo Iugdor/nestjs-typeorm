@@ -3,7 +3,7 @@ import { UsersService } from 'src/users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
-import { PayloadToken } from '../models/token.model';
+import { PayloadToken, SubToken } from '../models/token.model';
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,7 +23,11 @@ export class AuthService {
     }
   }
   generateJWT(user: User) {
-    const payload: PayloadToken = { role: user.role, sub: user.id };
+    const sub: SubToken = {
+      userId: user.id,
+      customerId: user.customer ? user.customer.id : null,
+    };
+    const payload: PayloadToken = { role: user.role, sub };
     return {
       access_token: this.jwtService.sign(payload),
       user,
