@@ -11,6 +11,7 @@ import { enviroments } from './enviroments';
 import { AuthModule } from './auth/auth.module';
 import config from './config';
 import { TransformInterceptor } from './config/transform.interceptor';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TransformInterceptor } from './config/transform.interceptor';
     ProductsModule,
     DatabaseModule,
     AuthModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

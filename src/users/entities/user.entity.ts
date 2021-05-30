@@ -29,6 +29,22 @@ export class User {
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
+  @Column({
+    type: 'varchar',
+    length: 255,
+    name: 'confirmation_account_token',
+    nullable: true,
+  })
+  confirmationAccountToken: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    name: 'password_recovery_token',
+    nullable: true,
+  })
+  passwordRecoveryToken: string;
+
   @CreateDateColumn({
     name: 'create_at',
     type: 'timestamptz',

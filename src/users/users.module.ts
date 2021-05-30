@@ -30,6 +30,6 @@ import { ProfileController } from './controllers/profile.controller';
     ProfileController,
   ],
   providers: [CustomersService, UsersService, OrdersService, OrderItemsService],
-  exports: [UsersService],
+  exports: [UsersService, TypeOrmModule],
 })
 export class UsersModule {}

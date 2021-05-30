@@ -14,7 +14,20 @@ export default registerAs('config', () => {
       user: process.env.POSTGRES_USER,
       host: process.env.POSTGRES_HOST,
     },
-    apiKey: process.env.API_KEY,
+    mail: {
+      host: process.env.MAIL_HOST,
+      user: process.env.MAIL_USER,
+      port: process.env.MAIL_PORT,
+      secure: process.env.MAIL_SECURE,
+      password: process.env.MAIL_PASSWORD,
+      from: process.env.MAIL_FROM,
+    },
+    mailTransport: process.env.MAIL_TRANSPORT,
+    baseUrl: process.env.BASE_URL,
+    confirmationEmailToken: {
+      jwtSecret: process.env.CONFIRMATION_JWT_SECRET,
+      expiresIn: process.env.CONFIRMATION_EXPIRES_IN,
+    },
     jwtSecret: process.env.JWT_SECRET,
   };
 });
