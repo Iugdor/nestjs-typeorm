@@ -9,7 +9,7 @@ import { FindConditions, FindManyOptions, Repository } from 'typeorm';
 import { RELATIONS } from './entity-relations';
 export class BasicService<T, C, U, F extends FilterDto> {
   private readonly modelName: string;
-  private readonly logger: Logger;
+  protected readonly logger: Logger;
 
   constructor(protected readonly modelRepository: Repository<T>) {
     this.modelName = this.modelRepository.metadata.tableName;

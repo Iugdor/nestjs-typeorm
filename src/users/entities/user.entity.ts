@@ -3,7 +3,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -25,8 +24,10 @@ export class User {
   @Column({ type: 'varchar', length: 100 })
   role: string;
 
-  @OneToOne(() => Customer, { nullable: true })
-  @JoinColumn({ name: 'customer_id' })
+  @Column({ type: 'boolean', default: false })
+  email_confirmed: boolean;
+
+  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
   customer: Customer;
 
   @Column({
@@ -35,6 +36,7 @@ export class User {
     name: 'confirmation_account_token',
     nullable: true,
   })
+  @Exclude()
   confirmationAccountToken: string;
 
   @Column({
@@ -43,6 +45,7 @@ export class User {
     name: 'password_recovery_token',
     nullable: true,
   })
+  @Exclude()
   passwordRecoveryToken: string;
 
   @CreateDateColumn({

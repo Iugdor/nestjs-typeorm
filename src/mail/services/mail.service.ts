@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { UsersService } from '../../users/services/users.service';
 import { SentMessageInfo } from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
 import config from '../../config';
 import { ConfigType } from '@nestjs/config';
+import { User } from '../../users/entities/user.entity';
 
 @Injectable()
 export class MailService {
@@ -12,24 +12,12 @@ export class MailService {
 
   constructor(
     private mailerService: MailerService,
-    private userService: UsersService,
     private jwtService: JwtService,
     @Inject(config.KEY) private configService: ConfigType<typeof config>,
   ) {}
 
-  async sendUserConfirmation(userId: number) {
-    const user = await this.userService.findOne(userId);
-
-    const token =
-      this.validToken(user.confirmationAccountToken) ||
-      this.jwtService.sign({ id: user.id });
-
-    // If the token is not undefined and is not equal to the user's actual token
-    if (token && token !== user.confirmationAccountToken) {
-      user.confirmationAccountToken = token;
-      await this.userService.save(user);
-    }
-    const url = `${this.configService.baseUrl}/confirmation-email?token=${token}`;
+  async sendConfirmationMail(token: string, user: User) {
+    const url = `${this.configService.baseUrl}/users/confirmation-email?token=${token}`;
     console.log(url);
     this.logger.log(`Sending email to ${user.email}`);
     const result: SentMessageInfo = await this.mailerService.sendMail({
@@ -46,7 +34,25 @@ export class MailService {
     );
   }
 
-  validToken(token: string) {
+  async sendPasswordRecoveryMail(token: string, user: User) {
+    const url = `${this.configService.baseUrl}/users/change-password?token=${token}`;
+    console.log(url);
+    this.logger.log(`Sending email to ${user.email}`);
+    const result: SentMessageInfo = await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Platzi Store Password Reset',
+      template: './password-recovery',
+      context: {
+        name: user.customer.name,
+        url,
+      },
+    });
+    this.logger.log(
+      `Result to sending email to ${user.email} => ${JSON.stringify(result)}`,
+    );
+  }
+
+  public validToken(token: string) {
     if (token && this.jwtService.verify(token)) {
       return token;
     }

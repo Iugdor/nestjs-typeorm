@@ -16,11 +16,13 @@ import { OrdersController } from './controllers/orders.controller';
 import { OrderItemsController } from './controllers/order-items.controller';
 import { OrderItemsService } from './services/order-items.service';
 import { ProfileController } from './controllers/profile.controller';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
     ProductsModule,
     TypeOrmModule.forFeature([User, Customer, Order, OrderItem]),
+    MailModule,
   ],
   controllers: [
     CustomerController,

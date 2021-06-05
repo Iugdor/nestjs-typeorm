@@ -5,11 +5,7 @@ import { MailService } from './services/mail.service';
 import { ConfigType } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { MailController } from './controllers/mail.controller';
-import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ValidationController } from './controllers/validation.controller';
-import { ValidationService } from './services/validation.service';
 
 @Module({
   imports: [
@@ -42,7 +38,6 @@ import { ValidationService } from './services/validation.service';
       },
       inject: [config.KEY],
     }),
-    UsersModule,
     JwtModule.registerAsync({
       useFactory: (configService: ConfigType<typeof config>) => {
         const { jwtSecret, expiresIn } = configService.confirmationEmailToken;
@@ -56,7 +51,7 @@ import { ValidationService } from './services/validation.service';
       inject: [config.KEY],
     }),
   ],
-  providers: [MailService, ValidationService],
-  controllers: [MailController, ValidationController],
+  providers: [MailService],
+  exports: [MailService, JwtModule],
 })
 export class MailModule {}

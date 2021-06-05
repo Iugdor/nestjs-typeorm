@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Order } from './order.entity';
 import { User } from './user.entity';
@@ -25,7 +26,11 @@ export class Customer {
   @Column({ type: 'varchar', length: 15 })
   phone: string;
 
-  @OneToOne(() => User, (user) => user.customer, { nullable: true })
+  @OneToOne(() => User, {
+    nullable: false,
+    cascade: true,
+  })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToMany(() => Order, (order) => order.customer)
